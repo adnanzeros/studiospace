@@ -1,0 +1,39 @@
+/* Explore Studios page. Card/heading style featured-studios.css theke ashe, shudhu globals.css variable ba */
+
+.ex-page { padding: 40px 0 80px; }
+
+.ex-toolbar { display: flex; gap: 14px; margin-bottom: 18px; }
+.ex-search {
+  flex: 1; display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 16px;
+  background: var(--surface); border: 1.5px solid var(--border); border-radius: 12px; color: var(--muted);
+  transition: border-color .2s, box-shadow .2s;
+}
+.ex-search:focus-within { border-color: #A855F7; box-shadow: 0 0 0 3px rgba(168, 85, 247, .18); }
+.ex-search input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; color: var(--text); font-size: 15px; }
+.ex-search input::placeholder { color: var(--muted); }
+
+.ex-select {
+  height: 46px; padding: 0 14px; min-width: 190px; border-radius: 12px; cursor: pointer;
+  background: var(--surface); color: var(--text); border: 1.5px solid var(--border); outline: none; font-size: 14px;
+}
+.ex-select:focus { border-color: #A855F7; }
+
+.ex-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
+.ex-chip {
+  height: 38px; padding: 0 18px; border-radius: 999px; cursor: pointer;
+  font-size: 14px; font-weight: 600; color: var(--text);
+  background: var(--surface); border: 1.5px solid var(--border); transition: .2s;
+}
+.ex-chip:hover { background-image: var(--grad-brand-soft); }
+.ex-chip.active { background-image: var(--grad-brand); color: #fff; border-color: transparent; box-shadow: var(--shadow-glow); }
+
+.ex-count { margin-bottom: 18px; font-size: 14px; color: var(--muted); }
+.ex-count strong { color: var(--text); }
+
+@media (max-width: 600px) {
+  .ex-page { padding: 24px 0 56px; }
+  .ex-toolbar { flex-direction: column; }
+  .ex-select { width: 100%; }
+  .ex-chips { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; margin-right: -16px; }
+  .ex-chip { flex: none; }
+}
