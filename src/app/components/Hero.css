@@ -1,0 +1,143 @@
+/* ==========================================================================
+   HERO SLIDER (Swiper)
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background: #0B0A1E;
+}
+.hero.under-nav { padding-top: 0; padding-bottom: 0; }
+
+/* ---------- Slides (Swiper fade effect এই fade handle করে) ---------- */
+.hero-slides { width: 100%; }
+.hero .hero-slide {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 680px;                              /* ★ hero উচ্চতা */
+  padding: 78px 0 90px;                           /* ★ উপরে 78px = nav এর জায়গা | নিচে 90px = dots এর জায়গা */
+}
+
+.hero-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transform: scale(1.06);
+  transition: transform 7s ease;
+}
+.hero-slide.active .hero-img { transform: scale(1); }
+.hero-overlay { position: absolute; inset: 0; background-image: var(--grad-hero); }
+
+/* ---------- Content ---------- */
+.hero-content { position: relative; z-index: 2; max-width: 1200px; }
+.hero-content > * { max-width: 560px; }           /* ★ লেখার সর্বোচ্চ চওড়া */
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 12.5px; font-weight: 500;
+  background: rgba(255, 255, 255, .1);
+  border: 1px solid rgba(255, 255, 255, .22);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.hero-badge i {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background-image: var(--grad-accent);
+}
+
+.hero-title {
+  font-size: 56px;                                /* ★ heading size */
+  font-weight: 800;
+  line-height: 1.12;
+  margin: 20px 0 16px;
+}
+.hero-hl {
+  background-image: linear-gradient(90deg, #A5B4FC 0%, #E879F9 55%, #F472B6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero-text { font-size: 17px; color: rgba(255, 255, 255, .82); }
+.hero-actions { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+
+/* Ghost button (Host Your Space) */
+.btn-ghost {
+  background: rgba(255, 255, 255, .08);
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, .4);
+}
+.btn-ghost:hover { background: rgba(255, 255, 255, .18); }
+
+/* ---------- Content fade-up (শুধু active slide এ) ---------- */
+.hero-slide .hero-content > * {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.hero-slide.active .hero-content > * { opacity: 1; transform: none; }
+.hero-slide.active .hero-content > :nth-child(2) { transition-delay: .1s; }
+.hero-slide.active .hero-content > :nth-child(3) { transition-delay: .2s; }
+.hero-slide.active .hero-content > :nth-child(4) { transition-delay: .3s; }
+
+/* ---------- Dots + arrows ---------- */
+.hero-controls {
+  position: absolute; left: 0; right: 0;
+  bottom: 36px;
+  z-index: 5;
+  max-width: 1200px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.hero-dots { display: flex; gap: 8px; align-items: center; }
+.hero-dots button {
+  width: 10px; height: 10px;
+  border: 0; border-radius: 999px;
+  background: rgba(255, 255, 255, .4);
+  cursor: pointer; transition: .3s;
+}
+.hero-dots button.active { width: 34px; background-image: var(--grad-accent); }
+
+.hero-arrows { display: flex; gap: 10px; }
+.hero-arrows button {
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(255, 255, 255, .1);
+  border: 1.5px solid rgba(255, 255, 255, .35);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  cursor: pointer; transition: .2s;
+}
+.hero-arrows button:hover { background-image: var(--grad-brand); border-color: transparent; }
+
+/* ==========================================================================
+   Tablet ≤ 991px
+   ========================================================================== */
+@media (max-width: 991px) {
+  .hero .hero-slide { min-height: 600px; padding: 72px 0 90px; }
+  .hero-title { font-size: 42px; }
+  .hero-text { font-size: 16px; }
+  .hero-content > * { max-width: 480px; }
+}
+
+/* ==========================================================================
+   Mobile ≤ 480px
+   ========================================================================== */
+@media (max-width: 480px) {
+  .hero .hero-slide { min-height: 620px; padding: 64px 0 96px; align-items: flex-end; }
+  .hero-overlay {
+    background-image: linear-gradient(0deg, rgba(15, 10, 40, .94) 0%, rgba(15, 10, 40, .7) 55%, rgba(15, 10, 40, .15) 100%);
+  }
+  .hero-title { font-size: 31px; margin: 16px 0 12px; }
+  .hero-text { font-size: 14.5px; }
+  .hero-badge { font-size: 11.5px; }
+  .hero-actions { margin-top: 22px; }
+  .hero-actions .btn { flex: 1; height: 44px; font-size: 14px; padding: 0 14px; }
+  .hero-controls { bottom: 28px; }
+  .hero-arrows button { width: 38px; height: 38px; }
+}
