@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# StudioSpace
 
-## Getting Started
+> Peer-to-peer creative workspace & production studio sharing platform.
 
-First, run the development server:
+🔗 **Live site:** <<https://your-app.vercel.app>>
+🛠️ **Server repo:** <<https://github.com/your-username/studiospace-server>>
+🖥️ **API (Render):** <<https://your-api.onrender.com>>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Browse, search, filter by category and sort studios by rating or price
+- Hero slider (Swiper), featured studios from MongoDB, category shortcuts
+- Email/password and Google login with BetterAuth, password rules enforced
+- Hosts can add, update and delete listings, with ImgBB image upload
+- Booking with live price summary, host confirm/decline, and double-booking prevention
+- JWT in HTTPOnly cookies, protected API routes (401 for unauthorized requests)
+- Light/dark theme toggle, toast notifications and custom confirm modals
+- Saved studios wishlist and downloadable PDF booking invoices
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Frontend:** Next.js (App Router), React, Swiper, Sonner, Lucide, jsPDF
+- **Auth:** BetterAuth (MongoDB adapter) + JWT (HTTPOnly cookie)
+- **Backend:** Express.js, MongoDB (Atlas)
+- **Deployment:** Vercel (client) and Render (server)
 
-## Learn More
+## Local Setup
 
-To learn more about Next.js, take a look at the following resources:
+1. Clone the client and server repos, then run the server first:
+   ```bash
+   cd studiospace-server
+   npm install
+   cp .env.example .env   # fill in your values
+   npm run seed           # optional demo studios
+   npm run dev
+   ```
+2. Client:
+   ```bash
+   cd studiospace
+   npm install
+   ```
+   Create `.env.local`:
+   ```env
+   NEXT_PUBLIC_API_URL=http://localhost:5000
+   NEXT_PUBLIC_IMGBB_KEY=your_imgbb_key
+   MONGODB_URI=your_mongodb_uri
+   DB_NAME=studiospace
+   BETTER_AUTH_SECRET=a_long_random_string
+   BETTER_AUTH_URL=http://localhost:3000
+   JWT_SECRET=same_value_as_the_server
+   GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET=your_google_client_secret
+   ```
+3. Run `npm run dev` and open http://localhost:3000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Examiner Test Credentials
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Role | Email | Password |
+|------|-------|----------|
+| Guest / Host | <<examiner@example.com>> | <<Examiner123>> |
