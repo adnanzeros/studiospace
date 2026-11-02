@@ -1,0 +1,107 @@
+/* ==========================================================================
+   FeaturedStudios section
+   শুধু globals.css এর variable ব্যবহার করা হয়েছে (:root এ কিছু যোগ হয়নি)
+   ========================================================================== */
+
+.fs-section { padding: 80px 0; }                         /* ★ section উপর-নিচ ফাঁক */
+
+/* ---- Heading ---- */
+.fs-head { text-align: center; max-width: 620px; margin: 0 auto 48px; }
+.fs-eyebrow {
+  display: inline-block; font-size: 12px; font-weight: 600;
+  letter-spacing: .16em; text-transform: uppercase; margin-bottom: 12px;
+}
+.fs-title { font-size: 36px; font-weight: 800; margin-bottom: 12px; }   /* ★ heading size (সব section এ একই রাখুন) */
+.fs-sub { color: var(--muted); font-size: 16px; }
+
+/* ---- Grid ---- */
+.fs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);                 /* ★ desktop 3 column */
+  gap: 28px;
+}
+
+/* ---- Card (সব card সমান উচ্চতা) ---- */
+.fs-card {
+  display: flex; flex-direction: column; height: 100%;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; overflow: hidden;                 /* ★ card কোণ */
+  box-shadow: var(--shadow-card);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.fs-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-glow); }
+
+.fs-media { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background-image: var(--grad-brand-soft); }
+.fs-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.fs-card:hover .fs-media img { transform: scale(1.05); }
+
+.fs-badge {
+  position: absolute; top: 12px; left: 12px;
+  padding: 4px 12px; border-radius: 999px;
+  font-size: 11px; font-weight: 600; color: #fff;
+  background-image: var(--grad-brand);
+}
+.fs-heart {
+  position: absolute; top: 10px; right: 10px;
+  width: 32px; height: 32px; display: grid; place-items: center;
+  border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--surface); color: var(--muted);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .15); transition: .2s;
+}
+.fs-heart:hover { transform: scale(1.1); color: #EC4899; }
+.fs-heart.active { background-image: var(--grad-brand); color: #fff; }
+.fs-heart:disabled { opacity: .6; cursor: wait; }
+
+.fs-body { display: flex; flex-direction: column; flex: 1; padding: 16px 18px 18px; }
+.fs-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.fs-name {
+  font-size: 15px; font-weight: 700;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;   /* এক লাইনে রাখে, card সমান থাকে */
+}
+.fs-rating {
+  flex: none; padding: 3px 9px; border-radius: 8px;
+  font-size: 12px; font-weight: 700; color: #fff;
+  background-image: var(--grad-accent);
+}
+.fs-loc {
+  display: flex; align-items: center; gap: 6px; margin-top: 8px;
+  font-size: 13px; color: var(--muted);
+}
+.fs-foot { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 16px; }
+.fs-price { font-size: 22px; font-weight: 800; color: var(--text); }
+.fs-price small { font-size: 12px; font-weight: 500; color: var(--muted); }
+
+.fs-more { display: flex; justify-content: center; margin-top: 44px; }
+
+/* ---- Skeleton loader ---- */
+.fs-skel { pointer-events: none; }
+.fs-skel .fs-media, .sk-line, .sk-btn {
+  background: linear-gradient(90deg, var(--surface-2) 25%, var(--border) 50%, var(--surface-2) 75%);
+  background-size: 200% 100%; animation: fs-shimmer 1.4s infinite;
+}
+.sk-line { height: 14px; border-radius: 8px; margin-bottom: 10px; }
+.sk-line.w70 { width: 70%; }
+.sk-line.w40 { width: 40%; }
+.sk-btn { width: 96px; height: 38px; border-radius: 999px; }
+@keyframes fs-shimmer { to { background-position: -200% 0; } }
+
+/* ---- Empty / Error ---- */
+.fs-state {
+  grid-column: 1 / -1; text-align: center; padding: 56px 24px;
+  background: var(--surface); border: 1px dashed var(--border); border-radius: 20px;
+}
+.fs-state h3 { font-size: 20px; margin-bottom: 8px; }
+.fs-state p { color: var(--muted); margin-bottom: 20px; }
+
+/* ---- Responsive ---- */
+@media (max-width: 991px) {
+  .fs-section { padding: 64px 0; }
+  .fs-grid { grid-template-columns: repeat(2, 1fr); gap: 22px; }   /* tablet 2 column */
+  .fs-title { font-size: 30px; }
+}
+@media (max-width: 600px) {
+  .fs-section { padding: 52px 0; }
+  .fs-grid { grid-template-columns: 1fr; }                         /* mobile 1 column */
+  .fs-title { font-size: 26px; }
+  .fs-head { margin-bottom: 32px; }
+}

@@ -1,0 +1,40 @@
+/* Host Guarantee & Creator Support. Rong globals.css variable theke.
+   padding-bottom ei file e deya nei: .over-footer (globals.css) footer er kone onujayi boshay */
+
+.hg-section { padding-top: 80px; }
+
+.hg-layout { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: center; }
+
+.hg-copy { text-align: left; }
+.hg-title { text-align: left; }
+.hg-sub { max-width: 460px; }
+.hg-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+.hg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+
+.hg-card {
+  height: 100%; padding: 24px;                                                    /* ★ shob card same size */
+  background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+  box-shadow: var(--shadow-card); transition: transform .25s ease, box-shadow .25s ease;
+}
+.hg-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-glow); }
+.hg-icon {
+  width: 46px; height: 46px; display: grid; place-items: center; margin-bottom: 16px;
+  border-radius: 14px; color: #fff; background-image: var(--grad-brand);
+}
+.hg-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+.hg-card p { font-size: 14px; color: var(--muted); }
+
+@media (max-width: 991px) {
+  .hg-section { padding-top: 64px; }
+  .hg-layout { grid-template-columns: 1fr; gap: 36px; }
+  .hg-copy, .hg-title { text-align: center; }
+  .hg-sub { margin: 0 auto; }
+  .hg-actions { justify-content: center; }
+}
+@media (max-width: 600px) {
+  .hg-section { padding-top: 52px; }
+  .hg-grid { grid-template-columns: 1fr; }
+  .hg-actions { flex-direction: column; }
+  .hg-actions .btn { width: 100%; }
+}
