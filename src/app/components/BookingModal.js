@@ -16,15 +16,31 @@ const TIMES = Array.from(
   (_, i) => `${String(i + 6).padStart(2, '0')}:00`,
 ); // 06:00 - 23:00
 
+// Ajker date hole shudhu ekhon er por er ghonta gulo dekhabe (past somoy hide)
+const timesFor = d =>
+  d === todayStr()
+    ? TIMES.filter(t => Number(t.slice(0, 2)) > new Date().getHours())
+    : TIMES;
+
 // "Book Workspace Now" click korle ei modal khole
 export default function BookingModal({ studio, onClose }) {
   const router = useRouter();
   const [date, setDate] = useState(todayStr());
-  const [startTime, setStartTime] = useState('10:00');
+  const [startTime, setStartTime] = useState(
+    () => timesFor(todayStr())[0] || TIMES[0],
+  );
   const [hours, setHours] = useState(2);
   const [notes, setNotes] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+
+  const times = timesFor(date);
+
+  const onDateChange = value => {
+    setDate(value);
+    const list = timesFor(value);
+    if (!list.includes(startTime)) setStartTime(list[0] || TIMES[0]);
+  };
 
   const total = useMemo(
     () => studio.hourlyRate * hours,
@@ -82,7 +98,7 @@ export default function BookingModal({ studio, onClose }) {
               type="date"
               min={todayStr()}
               value={date}
-              onChange={e => setDate(e.target.value)}
+              onChange={e => onDateChange(e.target.value)}
               required
             />
           </div>
@@ -93,7 +109,7 @@ export default function BookingModal({ studio, onClose }) {
               value={startTime}
               onChange={e => setStartTime(e.target.value)}
             >
-              {TIMES.map(t => (
+              {times.map(t => (
                 <option key={t} value={t}>
                   {t}
                 </option>
