@@ -32,6 +32,7 @@ function Navbar({ user, theme, onToggleTheme, onLogout }) {
 
   const [open, setOpen] = useState(false);
   const [dd, setDd] = useState(false);
+  const [pin, setPin] = useState(false); 
   const [scrolled, setScrolled] = useState(false);
 
   const ddRef = useRef(null);
@@ -39,7 +40,10 @@ function Navbar({ user, theme, onToggleTheme, onLogout }) {
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     const onClick = e => {
-      if (ddRef.current && !ddRef.current.contains(e.target)) setDd(false);
+      if (ddRef.current && !ddRef.current.contains(e.target)) {
+        setDd(false);
+        setPin(false);
+      }
     };
 
     window.addEventListener('scroll', onScroll);
@@ -53,6 +57,7 @@ function Navbar({ user, theme, onToggleTheme, onLogout }) {
   useEffect(() => {
     setOpen(false);
     setDd(false);
+    setPin(false);
   }, [path]);
 
   const isActive = href => {
@@ -148,13 +153,22 @@ function Navbar({ user, theme, onToggleTheme, onLogout }) {
               className="avatar-wrap"
               ref={ddRef}
               onMouseEnter={() => window.innerWidth > 991 && setDd(true)}
-              onMouseLeave={() => window.innerWidth > 991 && setDd(false)}
+              onMouseLeave={() =>
+                window.innerWidth > 991 && !pin && setDd(false)
+              }
             >
               <button
                 className="avatar"
-                onClick={() =>
-                  setDd(v => (window.innerWidth <= 991 ? !v : true))
-                }
+                onClick={() => {
+                  // Hover diye khulle click korle pin hoy, pin kora obosthay click korle bondho hoy
+                  if (dd && pin) {
+                    setDd(false);
+                    setPin(false);
+                  } else {
+                    setDd(true);
+                    setPin(true);
+                  }
+                }}
                 aria-label="Profile menu"
                 aria-expanded={dd}
                 type="button"

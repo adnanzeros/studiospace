@@ -16,10 +16,10 @@ export const auth = betterAuth({
   database: mongodbAdapter(db, { client }),
   emailAndPassword: {
     enabled: true,
-    requireEmailVerification: false, // brief onujayi email verification nai
-    minPasswordLength: 6, // BetterAuth default 8, brief e 6
-    autoSignIn: false, // register korle login page e jabe (brief)
-  },
+    requireEmailVerification: false,
+    minPasswordLength: 6,
+    autoSignIn: false,
+  }, // <-- eta miss chilo
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID,

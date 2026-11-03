@@ -1,3 +1,5 @@
+import { ensureJwt } from './session';
+
 // Server (SSR) e Express er full URL, browser e '/backend' (next.config.mjs rewrite) -> cookie first-party thake
 const SERVER = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 export const API = typeof window === 'undefined' ? SERVER : '/backend';
@@ -18,7 +20,9 @@ export const resolveImage = img => {
 };
 
 // JSON fetch helper: cookie pathay, error hole Error(message) throw kore (err.status soho)
-export async function apiFetch(path, options = {}) {
+// 401 pele (JWT cookie nai/expired) BetterAuth session theke notun JWT niye ekbar auto-retry kore.
+// Session o na thakle tokhon-i 401 throw hoy (tokhon login e pathano thik).
+export async function apiFetch(path, options = {}, retried = false) {
   const res = await fetch(`${API}${path}`, {
     credentials: 'include',
     ...options,
@@ -28,6 +32,12 @@ export async function apiFetch(path, options = {}) {
     },
     body: options.body ? JSON.stringify(options.body) : undefined,
   });
+
+  if (res.status === 401 && !retried && typeof window !== 'undefined') {
+    const refreshed = await ensureJwt(true);
+    if (refreshed) return apiFetch(path, options, true);
+  }
+
   let data = null;
   try {
     data = await res.json();

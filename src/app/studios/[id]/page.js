@@ -18,6 +18,7 @@ import { categoryLabel } from '@/lib/categories';
 import { API, resolveImage } from '@/lib/api';
 import { useSession } from '@/lib/auth-client';
 import BookingModal from '../../components/BookingModal';
+import ReviewForm from '../../components/ReviewForm';
 import '../../components/featured-studios.css'; // card badge, skeleton, empty-state style
 import './details.css';
 
@@ -228,6 +229,7 @@ export default function StudioDetailsPage() {
                 No reviews yet. Be the first to book and review this space.
               </p>
             )}
+            <ReviewForm studio={studio} user={user} onAdded={setStudio} />
           </div>
 
           {/* ---------- Right column: booking card ---------- */}
