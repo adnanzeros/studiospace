@@ -19,8 +19,6 @@ import Spinner from '../components/Spinner';
 import { apiFetch, resolveImage } from '@/lib/api';
 import { categoryLabel } from '@/lib/categories';
 
-const ADMIN_USERNAME = 'adnanzeros';
-
 const CSS = `
 /* ===== Layout ===== */
 .ad-wrap { padding: 40px 0 72px; position: relative; }
@@ -133,8 +131,6 @@ function AdminLogin({ onDone }) {
     e.preventDefault();
     if (!username.trim())
       return toast.error('Please enter the admin username.');
-    if (username.trim() !== ADMIN_USERNAME)
-      return toast.error('Wrong admin username.');
     if (!password) return toast.error('Please enter the admin password.');
     setBusy(true);
     try {
@@ -146,8 +142,16 @@ function AdminLogin({ onDone }) {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.message || 'Login failed');
+      // cookie set holo, ekhon Express server o accept kore kina check
+      try {
+        await apiFetch('/api/admin/me', {}, true);
+      } catch (err2) {
+        throw new Error(
+          `Login ok, but the API server rejected it (${err2.status || 'no response'}): ${err2.message}. Check JWT_SECRET matches Express and /api/admin/me exists.`,
+        );
+      }
       toast.success('Welcome back, admin!');
-      onDone();
+      onDone(username.trim());
     } catch (err) {
       toast.error(err.message);
     } finally {
@@ -556,6 +560,7 @@ const TABS = [
 
 export default function AdminPage() {
   const [auth, setAuth] = useState('checking'); // checking | in | out
+  const [adminName, setAdminName] = useState('');
   const [tab, setTab] = useState('overview');
 
   // Admin API call: 401 pele (session sesh) login screen e fire jay. 3rd arg true = user-JWT auto retry off
@@ -570,7 +575,10 @@ export default function AdminPage() {
 
   useEffect(() => {
     apiFetch('/api/admin/me', {}, true)
-      .then(() => setAuth('in'))
+      .then(me => {
+        setAdminName(me?.username || me?.name || '');
+        setAuth('in');
+      })
       .catch(() => setAuth('out'));
   }, []);
 
@@ -594,7 +602,8 @@ export default function AdminPage() {
       <style>{CSS}</style>
       {auth === 'out' ? (
         <AdminLogin
-          onDone={() => {
+          onDone={name => {
+            setAdminName(name || '');
             setTab('overview');
             setAuth('in');
           }}
@@ -605,7 +614,7 @@ export default function AdminPage() {
             <h1>
               Admin Panel
               <span className="ad-user-chip">
-                <User size={13} /> @{ADMIN_USERNAME}
+                <User size={13} /> {adminName ? `@${adminName}` : 'admin'}
               </span>
             </h1>
             <button className="btn btn-outline btn-sm" onClick={logout}>
